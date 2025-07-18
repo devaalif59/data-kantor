@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Data Kantor & Keuangan</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f1f1f1;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #3498db;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tfoot {
+      font-weight: bold;
+      background-color: #ecf0f1;
+    }
+
+    @media (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      th {
+        position: sticky;
+        top: 0;
+        background-color: #3498db;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Data Kantor & Keuangan</h1>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Divisi</th>
+        <th>Jumlah Pegawai</th>
+        <th>Anggaran (Rp)</th>
+        <th>Realisasi (Rp)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Keuangan</td>
+        <td>10</td>
+        <td>100.000.000</td>
+        <td>95.000.000</td>
+      </tr>
+      <tr>
+        <td>SDM</td>
+        <td>8</td>
+        <td>80.000.000</td>
+        <td>78.500.000</td>
+      </tr>
+      <tr>
+        <td>Operasional</td>
+        <td>15</td>
+        <td>150.000.000</td>
+        <td>140.000.000</td>
+      </tr>
+      <tr>
+        <td>IT</td>
+        <td>5</td>
+        <td>50.000.000</td>
+        <td>47.000.000</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">Total</td>
+        <td id="totalAnggaran">-</td>
+        <td id="totalRealisasi">-</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <script>
+    function parseRupiah(str) {
+      return parseInt(str.replaceAll('.', ''));
+    }
+
+    function formatRupiah(num) {
+      return num.toLocaleString('id-ID');
+    }
+
+    const rows = document.querySelectorAll("#dataTable tbody tr");
+    let totalAnggaran = 0;
+    let totalRealisasi = 0;
+
+    rows.forEach(row => {
+      const anggaran = parseRupiah(row.cells[2].innerText);
+      const realisasi = parseRupiah(row.cells[3].innerText);
+      totalAnggaran += anggaran;
+      totalRealisasi += realisasi;
+    });
+
+    document.getElementById("totalAnggaran").innerText = formatRupiah(totalAnggaran);
+    document.getElementById("totalRealisasi").innerText = formatRupiah(totalRealisasi);
+  </script>
+</body>
+</html>
